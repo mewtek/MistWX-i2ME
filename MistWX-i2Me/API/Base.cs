@@ -60,7 +60,7 @@ public class Base
     public string FormatUrl(LFRecordLocation location)
     {
         string url = DataUrl;
-        url = url.Replace("{apikey}", ApiKey);
+        url = url.Replace("{apiKey}", ApiKey);
 
         if (url.Contains("{lat}"))
         {
