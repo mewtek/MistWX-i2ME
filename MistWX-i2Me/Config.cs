@@ -8,6 +8,8 @@ namespace MistWX_i2Me;
 [XmlRoot("Config")]
 public class Config
 {
+    // Config Elements \\
+    
     [XmlElement] public string TwcApiKey { get; set; } = "REPLACE_ME";
 
     // Used to process what locations to generate
@@ -16,6 +18,11 @@ public class Config
         "C:\\Program Files (x86)\\TWC\\i2\\managed\\MachineProductConfig.xml";
 
 
+    [XmlElement] public string LogLevel { get; set; } = "info";
+
+    
+    // Actual configuration setup \\
+    
     public static Config config = new Config();
 
     
