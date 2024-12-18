@@ -106,6 +106,8 @@ public class Base
 
         LFRecordLocation location = await sqlite.QuerySingleAsync<LFRecordLocation>
             ($"SELECT * FROM LFRecord WHERE locId = '{locId}'");
+        
+        await sqlite.CloseAsync();
 
         return location;
     }
