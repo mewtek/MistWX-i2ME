@@ -15,7 +15,7 @@ internal class Log
     private static Color COLOR_DEBUG = Color.LightSeaGreen;
     private static Color COLOR_ERROR = Color.Red;
     private static Color COLOR_WARNING = Color.Yellow;
-    private static Color COLOR_INFO = Color.Green;
+    private static Color COLOR_INFO = Color.Azure;
 
     private static LogLevel _logLevel = LogLevel.Debug;
 
