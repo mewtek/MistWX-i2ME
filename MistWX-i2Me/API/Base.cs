@@ -1,6 +1,7 @@
 using System.Data.SQLite;
 using Dapper;
 using System.Text;
+using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -109,6 +110,17 @@ public class Base
         return location;
     }
 
+    public static Stream StreamFromString(string s)
+    {
+        var stream = new MemoryStream();
+        var writer = new StreamWriter(stream);
+        
+        writer.Write(s);
+        writer.Flush();
+        stream.Position = 0;
+        return stream;
+    }
+
     public async Task<List<GenericResponse<T>>> GetData<T>(string[] locations)
     {
         List<GenericResponse<T>> results = new List<GenericResponse<T>>();
@@ -146,6 +158,34 @@ public class Base
             {
                 Log.Debug(ex.Message);
                 Log.Warning($"Location {location} has no data for {RecordName}, skipping..");
+            }
+        }
+
+        return results;
+    }
+
+    /// <summary>
+    /// Creates a list of GenericResponse objects for JSON endpoints.
+    /// </summary>
+    /// <param name="locations">Array of location IDs</param>
+    /// <typeparam name="T">Type of API response</typeparam>
+    /// <returns>A list of GenericResponse<T> objects.</returns>
+    public async Task<List<GenericResponse<T>>> GetJsonData<T>(string[] locations)
+    {
+        List<GenericResponse<T>> results = new List<GenericResponse<T>>();
+
+        foreach (string location in locations)
+        {
+            LFRecordLocation locationInfo = await GetLocInfo(location);
+            string? response = await DownloadLocationData(locationInfo);
+
+            if (response != null)
+            {
+                using (var stream = StreamFromString(response))
+                {
+                    T? deserializedData = await JsonSerializer.DeserializeAsync<T?>(stream);
+                    results.Add(new GenericResponse<T>(locationInfo, response, deserializedData));
+                }
             }
         }
 
