@@ -36,6 +36,12 @@ public class TimedTasks
     /// <param name="sender">UdpSender, prefer priority port</param>
     public static async Task CheckForAlerts(string[] locations, UdpSender sender, int checkInterval)
     {
+        if (Config.config.UseNationalLocations)
+        {
+            Log.Debug("Disabling alert checking since national locations are enabled..");
+            return;
+        }
+        
         while (true)
         {
             Log.Info("Checking for new alerts..");
