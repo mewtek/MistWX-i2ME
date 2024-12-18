@@ -52,7 +52,7 @@ public class TimedTasks
 
             string? bulletinRecord = await new AlertBulletin().MakeRecord(alerts);
             
-            sender.SendFile(bulletinRecord, "storeData(QGROUP=__BERecord__,Feed=BERecord");
+            sender.SendFile(bulletinRecord, "storeData(QGROUP=__BERecord__,Feed=BERecord)");
             await Task.Delay(30 * 1000);
         }
     }
