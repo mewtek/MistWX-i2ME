@@ -13,12 +13,12 @@ Precipitation & Satellite radar images, while not finished, will be added in the
 
 
 ## Data endpoints collected
-- [ ] Bulletins / Alerts
+- [x] Bulletins / Alerts
 - [x] Current Observations
 - [x] Daily Forecast
 - [x] Hourly Forecast
+- [x] Air Quality
 - [ ] Tide Forecast 
-- [ ] Air Quality
 - [ ] Airport Delays (Requires complete ground-up rewrite)
 - [ ] Pollen Forecast
 - [ ] Heating & Cooling
