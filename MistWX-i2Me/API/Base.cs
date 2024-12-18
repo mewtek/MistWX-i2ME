@@ -78,9 +78,9 @@ public class Base
             url = url.Replace("{zip}", location.zip2locId);
         }
 
-        if (url.Contains("{countyCode}"))
+        if (url.Contains("{cntyCd}"))
         {
-            url = url.Replace("{countyCode}", location.cntyId);
+            url = url.Replace("{cntyCd}", location.cntyId);
         }
 
 
