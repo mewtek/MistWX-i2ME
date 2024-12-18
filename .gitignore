@@ -3,3 +3,18 @@ MistWX-i2Me/.idea
 
 MistWX-i2Me/bin
 MistWX-i2Me/obj
+
+
+# TWC Libraries
+TWC.I2.MsgEncode/.idea
+TWC.I2.MsgEncode/obj
+TWC.I2.MsgEncode/bin
+TWC.Msg/.idea
+TWC.Msg/obj
+TWC.Msg/bin
+TWC.SE.StarBundle/.idea
+TWC.SE.StarBundle/obj
+TWC.SE.StarBundle/bin
+TWC.Util/.idea
+TWC.Util/obj
+TWC.Util/bin
