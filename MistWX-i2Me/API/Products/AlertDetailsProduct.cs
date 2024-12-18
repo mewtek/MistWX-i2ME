@@ -33,6 +33,11 @@ public class AlertDetailsProduct : Base
                 {
                     AlertDetailResponse? response = await JsonSerializer.DeserializeAsync<AlertDetailResponse?>(stream);
                     results.Add(new GenericResponse<AlertDetailResponse>(headline.Location, res, response));
+                    Log.Debug("NEW ALERT\n" +
+                              $"ETN: {alert.eventTrackingNumber}\n" +
+                              $"Desc: {alert.eventDescription}\n" +
+                              $"Expiration Time Local: {alert.expireTimeLocal.ToString()}\n" +
+                              $"Expiration Time UTC: {alert.expireTimeUTC}");
                 }
             }
         }
