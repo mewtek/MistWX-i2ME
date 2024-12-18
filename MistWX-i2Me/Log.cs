@@ -32,7 +32,10 @@ internal class Log
 
         switch (newLevel)
         {
-            case "debug": _logLevel = LogLevel.Debug; break;
+            case "debug": 
+                Warning("LogLevel is set to debug. This can cause minor slowdowns when generating data.");
+                _logLevel = LogLevel.Debug;
+                break;
             case "info": _logLevel = LogLevel.Info; break;
             case "warning": _logLevel = LogLevel.Warning; break;
         }
