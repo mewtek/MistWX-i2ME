@@ -87,6 +87,7 @@ public class TimedTasks
     {
         while (true)
         {
+            await Task.Delay(15 * 1000);
             Log.Info("Running bi-hourly record collection");
             List<GenericResponse<AirQualityResponse>> aqs = await new AirQualityProduct().Populate(locations);
             List<GenericResponse<PollenResponse>> pfs = await new PollenForecastProduct().Populate(locations);
