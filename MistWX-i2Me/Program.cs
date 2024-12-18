@@ -1,5 +1,10 @@
 ﻿using System.Xml.Serialization;
 using MistWX_i2Me;
+using MistWX_i2Me.API;
+using MistWX_i2Me.API.Products;
+using MistWX_i2Me.Communication;
+using MistWX_i2Me.RecordGeneration;
+using MistWX_i2Me.Schema.ibm;
 using MistWX_i2Me.Schema.System;
 
 public class Program
@@ -20,10 +25,15 @@ public class Program
         Log.Info("Starting i2ME...");
 
         Config config = Config.Load();
+        UdpSender sender = new UdpSender();
 
-        List<string> locations = await GetMachineLocations(config);
-        
-        
+        Log.SetLogLevel(config.LogLevel);
+
+        string[] locations = { "USWA0028" };
+
+        Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, sender);
+        await Task.WhenAll(hourlyRecordGen);
+
     }
 
     /// <summary>
