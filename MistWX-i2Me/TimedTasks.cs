@@ -13,7 +13,7 @@ public class TimedTasks
     /// </summary>
     public static async Task CleanTempDirectory()
     {
-        await Task.Delay(7200 * 1000);
+        Log.Info("Cleaning temp directory..");
 
         DirectoryInfo di = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, "temp"));
         foreach (FileInfo file in di.GetFiles())
@@ -25,6 +25,8 @@ public class TimedTasks
         {
             dir.Delete();
         }
+        
+        await Task.Delay(7200 * 1000);
     }
 
     

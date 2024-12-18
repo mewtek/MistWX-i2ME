@@ -30,9 +30,11 @@ public class Program
         Log.SetLogLevel(config.LogLevel);
 
         string[] locations = { "USWA0028" };
+        // string[] locations = await GetMachineLocations(config);
 
         Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, sender);
-        await Task.WhenAll(hourlyRecordGen);
+        Task cleanTempDir = TimedTasks.CleanTempDirectory();
+        await Task.WhenAll(hourlyRecordGen, cleanTempDir);
 
     }
 
