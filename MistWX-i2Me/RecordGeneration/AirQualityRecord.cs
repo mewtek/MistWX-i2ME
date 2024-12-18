@@ -13,6 +13,11 @@ public class AirQualityRecord : I2Record
 
         foreach (var result in results)
         {
+            if (String.IsNullOrEmpty(result.Location.epaId))
+            {
+                continue;
+            }
+            
             recordScript +=
                 $"<AirQuality id=\"000000000\" locationKey=\"{result.Location.epaId}\" isWxScan=\"0\">" +
                 $"{result.RawResponse}<clientKey>{result.Location.epaId}</clientKey></AirQuality>";
@@ -20,6 +25,8 @@ public class AirQualityRecord : I2Record
         
         recordScript += "</Data>";
 
+        File.WriteAllText(recordPath, ValidateXml(recordScript));
+        
         return recordPath;
     }
 }

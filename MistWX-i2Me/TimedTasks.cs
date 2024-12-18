@@ -106,6 +106,10 @@ public class TimedTasks
             sender.SendFile(hcRecord, "storeData(QGROUP=__HeatingAndCooling__,Feed=HeatingAndCooling)");
             sender.SendFile(acpsRecord, "storeData(QGROUP=__AchesAndPains__,Feed=AchesAndPains)");
             sender.SendFile(brsRecord, "storeData(QGROUP=__Breathing__,Feed=Breathing)");
+            
+            string nextTimeStamp = DateTime.Now.AddHours(2).ToString("h:mm tt");
+            
+            Log.Info($"Next bi-hourly generation will be at {nextTimeStamp}");
 
             await Task.Delay(7200 * 1000);
         }
