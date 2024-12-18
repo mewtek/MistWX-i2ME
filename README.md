@@ -6,6 +6,8 @@ This is a rewrite of the original Python-based message encoder for The Weather C
 
 For any support with this encoder, join our [Discord](https://discord.gg/hV2w5sZQxz), and we'll be more than happy to help out with any issues! Bug reports through this repo's [issues tab](https://github.com/mewtek/mistwx-i2messageencoder/issues) are also much appreciated, and help a bit more with fixing general bugs with the software.
 
+To get started, visit [our wiki!](https://github.com/mewtek/MistWX-i2ME/wiki/First%E2%80%90time-setup)
+
 ## Features
 I2Me handles data collection, record generation, as well as record sending through the unit's routine & priority message ports, closely simulating the way that real headends receive their data. On top of this, all files sent through this program are compressed through GZip, making files send much faster than the predecessor Python scripts.
 
