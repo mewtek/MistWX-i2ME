@@ -250,6 +250,7 @@ public class AlertBulletin : I2Record
             loc.BLocTyp = detail.areaTypeCode;
             stateInfo.BSt = _states[locationInfo.stCd];
             stateInfo.Text = locationInfo.stCd;
+            locations.BStCd = stateInfo;
 
             header.BLocations = locations;
 
