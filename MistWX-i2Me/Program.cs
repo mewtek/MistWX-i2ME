@@ -31,9 +31,8 @@ public class Program
             config.UnitConfig.InterfaceAddress);
 
         Log.SetLogLevel(config.LogLevel);
-
-        string[] locations = { "USWA0028" };
-        // string[] locations = await GetMachineLocations(config);
+        
+        string[] locations = await GetMachineLocations(config);
 
         Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender);
         Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, routineSender);
@@ -48,7 +47,7 @@ public class Program
     /// </summary>
     private static async Task<string[]> GetMachineLocations(Config config)
     {
-        string[] locations = Array.Empty<string>();
+        List<string> locations = new List<string>();
 
         Log.Info("Getting locations for this unit..");
 
@@ -62,7 +61,7 @@ public class Program
         if (!File.Exists(config.MachineProductConfig))
         {
             Log.Error("Unable to locate MachineProductConfig.xml");
-            return locations;
+            return locations.ToArray();
         }
         
         File.Copy(config.MachineProductConfig, copyPath);
@@ -80,16 +79,18 @@ public class Program
                 i.Key == "NearbyLocation3" || i.Key == "NearbyLocation4" || i.Key == "NearbyLocation5" ||
                 i.Key == "NearbyLocation6" || i.Key == "NearbyLocation7" || i.Key == "NearbyLocation8")
             {
+                Log.Debug(i.Value);
                 if (string.IsNullOrEmpty(i.Value.ToString()))
                 {
                     continue;
                 }
                 
                 string choppedValue = i.Value.ToString().Split("1_US_")[1];
-                locations.Append(choppedValue);
+                locations.Add(choppedValue);
+                
             }
         }
         
-        return locations;
+        return locations.ToArray();
     }
 }
