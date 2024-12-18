@@ -45,7 +45,8 @@ public class Base
     {
         XDocument doc = XDocument.Parse(content);
         XElement? root = doc.Root;
-
+        string innerXml;
+        
         if (root == null)
         {
             return String.Empty;
@@ -54,7 +55,10 @@ public class Base
         XmlReader reader = root.CreateReader();
         reader.MoveToContent();
         
-        return reader.ReadInnerXml();
+        innerXml = reader.ReadInnerXml();
+        reader.Close();
+        
+        return innerXml;
     }
 
     
