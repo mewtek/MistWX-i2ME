@@ -21,8 +21,8 @@ Precipitation & Satellite radar images, while not finished, will be added in the
 - [ ] Tide Forecast 
 - [ ] Airport Delays (Requires complete ground-up rewrite)
 - [x] Pollen Forecast
-- [ ] Heating & Cooling
-- [ ] Aches & Pains
-- [ ] Breathing
+- [x] Heating & Cooling
+- [x] Aches & Pains
+- [x] Breathing
 
 **This list is subject to change.**
