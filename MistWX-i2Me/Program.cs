@@ -25,14 +25,17 @@ public class Program
         Log.Info("Starting i2ME...");
 
         Config config = Config.Load();
-        UdpSender sender = new UdpSender();
+        UdpSender routineSender = new UdpSender(config.UnitConfig.I2MsgAddress, config.UnitConfig.RoutineMsgPort,
+                config.UnitConfig.InterfaceAddress);
+        UdpSender prioritySender = new UdpSender(config.UnitConfig.I2MsgAddress, config.UnitConfig.PriorityMsgPort,
+            config.UnitConfig.InterfaceAddress);
 
         Log.SetLogLevel(config.LogLevel);
 
         string[] locations = { "USWA0028" };
         // string[] locations = await GetMachineLocations(config);
 
-        Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, sender);
+        Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, routineSender);
         Task cleanTempDir = TimedTasks.CleanTempDirectory();
         await Task.WhenAll(hourlyRecordGen, cleanTempDir);
 
