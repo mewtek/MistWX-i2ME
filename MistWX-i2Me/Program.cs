@@ -37,9 +37,8 @@ public class Program
 
         Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender);
         Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, routineSender);
-        Task biHourlyRecordGen = TimedTasks.BiHourlyCollection(locations, routineSender);
         Task cleanTempDir = TimedTasks.CleanTempDirectory();
-        await Task.WhenAll(checkAlerts, hourlyRecordGen, biHourlyRecordGen, cleanTempDir);
+        await Task.WhenAll(checkAlerts, hourlyRecordGen, cleanTempDir);
 
     }
 
