@@ -11,6 +11,7 @@ public class Config
     // Config Elements \\
     
     [XmlElement] public string TwcApiKey { get; set; } = "REPLACE_ME";
+    [XmlElement] public string LogLevel { get; set; } = "info";
 
     // Used to process what locations to generate
     [XmlElement]
@@ -18,11 +19,8 @@ public class Config
         "C:\\Program Files (x86)\\TWC\\i2\\managed\\MachineProductConfig.xml";
 
     [XmlElement] public NetworkConfig UnitConfig { get; set; } = new NetworkConfig();
+    [XmlElement("RadarConfig")] public RadarConfig radarConfig { get; set; } = new RadarConfig();
 
-
-    [XmlElement] public string LogLevel { get; set; } = "info";
-
-    
     // Actual configuration setup \\
     
     public static Config config = new Config();
@@ -68,5 +66,12 @@ public class Config
         [XmlElement] public int PriorityMsgPort { get; set; } = 7788;
         [XmlElement] public string I2MsgAddress { get; set; } = "224.1.1.77";
         [XmlElement] public string InterfaceAddress { get; set; } = "127.0.0.1";
+    }
+
+    [XmlRoot("RadarConfig")]
+    public class RadarConfig
+    {
+        [XmlElement] public bool UseRadarServer { get; set; } = false;
+        [XmlElement] public string RadarServerUrl { get; set; } = "REPLACE_ME";
     }
 }
