@@ -19,17 +19,17 @@ public class UdpSender
     private IPEndPoint _endPoint;
     private UdpClient _udpClient;
 
-    public UdpSender()
+    public UdpSender(string destination, int port, string interfaceIp)
     {
-        _ipAddress = IPAddress.Parse(_config.UnitConfig.I2MsgAddress);
-        _endPoint = new IPEndPoint(_ipAddress, _config.UnitConfig.RoutineMsgPort);
+        _ipAddress = IPAddress.Parse(destination);
+        _endPoint = new IPEndPoint(_ipAddress, port);
         
         _udpClient = new UdpClient();
         _udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-        _udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, _config.UnitConfig.RoutineMsgPort));
+        _udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, port));
         _udpClient.JoinMulticastGroup(_ipAddress, 64);
         
-        Log.Info($"UDP Socket established at port {_config.UnitConfig.RoutineMsgPort}.");
+        Log.Info($"UDP Socket established at port {port}.");
     }
 
     public void SendFile(string fileName, string command, bool gZipEncode = true, string headendId = null)
