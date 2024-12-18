@@ -1,4 +1,6 @@
+using System.Xml;
 using System.Xml.Serialization;
+using Dapper;
 using MistWX_i2Me.API;
 using MistWX_i2Me.API.Products;
 using MistWX_i2Me.Schema.ibm;
@@ -265,9 +267,11 @@ public class AlertBulletin : I2Record
         }
 
         XmlSerializer serializer = new XmlSerializer(typeof(BERecordRoot));
+        XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+        ns.Add("", "");
         using (StreamWriter sw = new StreamWriter(recordPath))
         {
-            serializer.Serialize(sw, root);
+            serializer.Serialize(sw, root, ns);
             sw.Close();
         }
 
