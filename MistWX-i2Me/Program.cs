@@ -35,9 +35,10 @@ public class Program
         string[] locations = { "USWA0028" };
         // string[] locations = await GetMachineLocations(config);
 
+        Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender);
         Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, routineSender);
         Task cleanTempDir = TimedTasks.CleanTempDirectory();
-        await Task.WhenAll(hourlyRecordGen, cleanTempDir);
+        await Task.WhenAll(checkAlerts, hourlyRecordGen, cleanTempDir);
 
     }
 

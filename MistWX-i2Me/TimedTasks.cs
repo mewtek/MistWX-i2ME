@@ -29,6 +29,33 @@ public class TimedTasks
         await Task.Delay(7200 * 1000);
     }
 
+    /// <summary>
+    /// Checks every 10 minutes for new alerts in the unit's area.
+    /// </summary>
+    /// <param name="locations">Array of location IDs</param>
+    /// <param name="sender">UdpSender, prefer priority port</param>
+    public static async Task CheckForAlerts(string[] locations, UdpSender sender)
+    {
+        while (true)
+        {
+            Log.Info("Checking for new alerts..");
+            List<GenericResponse<HeadlineResponse>> headlines = await new AlertHeadlinesProduct().Populate(locations);
+
+            if (headlines == null || headlines.Count == 0)
+            {
+                Log.Info("No new alerts found.");
+                await Task.Delay(30 * 1000);
+                continue;
+            }
+
+            List<GenericResponse<AlertDetailResponse>> alerts = await new AlertDetailsProduct().Populate(headlines);
+
+            string? bulletinRecord = await new AlertBulletin().MakeRecord(alerts);
+            
+            sender.SendFile(bulletinRecord, "storeData(QGROUP=__BERecord__,Feed=BERecord");
+            await Task.Delay(30 * 1000);
+        }
+    }
     
     public static async Task HourlyRecordCollection(string[] locations, UdpSender sender)
     {
@@ -45,8 +72,6 @@ public class TimedTasks
             string dfsRecord = await new DailyForecastRecord().MakeRecord(dfs);
             string hfRecord = await new HourlyForecastRecord().MakeRecord(hfs);
             string aqsRecord = await new AirQualityRecord().MakeRecord(aqs);
-            
-            
             
             sender.SendFile(obsRecord, "storeData(QGROUP=__CurrentObservations__,Feed=CurrentObservations)");
             sender.SendFile(dfsRecord, "storeData(QGROUP=_DailyForecast__,Feed=DailyForecast)");
