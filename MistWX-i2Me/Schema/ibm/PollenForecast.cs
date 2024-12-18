@@ -38,7 +38,7 @@ public class FcstValid {
 public class FcstValidLocal { 
 
 	[XmlElement(ElementName="fcstValidLocal")] 
-	public List<DateTime> ForecastValidLocal { get; set; } 
+	public List<string> ForecastValidLocal { get; set; } 
 }
 
 [XmlRoot(ElementName="dayInd")]
