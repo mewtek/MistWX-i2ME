@@ -157,6 +157,7 @@ public class Base
             catch (InvalidOperationException ex)
             {
                 Log.Debug(ex.Message);
+                Log.Debug(ex.StackTrace);
                 Log.Warning($"Location {location} has no data for {RecordName}, skipping..");
             }
         }
