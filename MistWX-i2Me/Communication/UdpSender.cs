@@ -37,7 +37,7 @@ public class UdpSender
         string tempFile = Path.Combine(_tempDirectory, Guid.NewGuid().ToString() + ".i2m");
         string fecTempFile = Path.Combine(_tempDirectory, Guid.NewGuid().ToString() + ".i2m");
         
-        Log.Info($"Sending new file\nCommand: {command}\nFileName: {fileName}");
+        Log.Info($"Sending new file\nCommand: {command}\nFileName: {tempFile}");
 
         File.Copy(fileName, tempFile);
 
