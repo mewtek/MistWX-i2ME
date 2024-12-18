@@ -25,7 +25,7 @@ public class PollenRecord : I2Record
         
         recordScript += "</Data>";
         
-        await File.WriteAllTextAsync(recordPath, recordScript);
+        await File.WriteAllTextAsync(recordPath, ValidateXml(recordScript));
 
         return recordPath;
     }
