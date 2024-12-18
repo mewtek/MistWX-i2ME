@@ -1,5 +1,6 @@
 # MistWX-i2ME
 ![Discord](https://img.shields.io/discord/1059354045971693568)
+![GitHub Release](https://img.shields.io/github/v/release/mewtek/mistwx-i2ME)
 ![GitHub License](https://img.shields.io/github/license/mewtek/mistwx-i2messageencoder)
 
 i2ME is a compact data aggregator and distributor for The Weather Channel's IntelliStar 2 XD & IntelliStar 2 JR headend units.
