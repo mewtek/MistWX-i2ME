@@ -17,7 +17,7 @@ public class Config
     public string MachineProductConfig { get; set; } =
         "C:\\Program Files (x86)\\TWC\\i2\\managed\\MachineProductConfig.xml";
 
-    [XmlElement] public int I2MsgPort { get; set; } = 7787;
+    [XmlElement] public NetworkConfig UnitConfig { get; set; } = new NetworkConfig();
 
 
     [XmlElement] public string LogLevel { get; set; } = "info";
@@ -59,5 +59,14 @@ public class Config
             return new Config();
         }
         
+    }
+
+    [XmlRoot("UnitConfig")]
+    public class NetworkConfig
+    {
+        [XmlElement] public int RoutineMsgPort { get; set; } = 7787;
+        [XmlElement] public int PriorityMsgPort { get; set; } = 7788;
+        [XmlElement] public string I2MsgAddress { get; set; } = "224.1.1.77";
+        [XmlElement] public string InterfaceAddress { get; set; } = "127.0.0.1";
     }
 }
