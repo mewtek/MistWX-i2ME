@@ -17,6 +17,8 @@ public class Config
     public string MachineProductConfig { get; set; } =
         "C:\\Program Files (x86)\\TWC\\i2\\managed\\MachineProductConfig.xml";
 
+    [XmlElement] public int I2MsgPort { get; set; } = 7787;
+
 
     [XmlElement] public string LogLevel { get; set; } = "info";
 
