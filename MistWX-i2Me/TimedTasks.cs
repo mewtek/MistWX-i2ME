@@ -39,16 +39,19 @@ public class TimedTasks
                 await new CurrentObservationsProduct().Populate(locations);
             List<GenericResponse<DailyForecastResponse>> dfs = await new DailyForecastProduct().Populate(locations);
             List<GenericResponse<HourlyForecastResponse>> hfs = await new HourlyForecastProduct().Populate(locations);
+            List<GenericResponse<AirQualityResponse>> aqs = await new AirQualityProduct().Populate(locations);
 
             string obsRecord = await new CurrentObsRecord().MakeRecord(obs);
             string dfsRecord = await new DailyForecastRecord().MakeRecord(dfs);
             string hfRecord = await new HourlyForecastRecord().MakeRecord(hfs);
+            string aqsRecord = await new AirQualityRecord().MakeRecord(aqs);
             
             
             
             sender.SendFile(obsRecord, "storeData(QGROUP=__CurrentObservations__,Feed=CurrentObservations)");
             sender.SendFile(dfsRecord, "storeData(QGROUP=_DailyForecast__,Feed=DailyForecast)");
             sender.SendFile(hfRecord, "storeData(QGROUP=_HourlyForecast__,Feed=HourlyForecast)");
+            sender.SendFile(aqsRecord, "storeData(QGROUP=_AirQuality__,Feed=AirQuality)");
             
             string nextTimestamp = DateTime.Now.AddHours(1).ToString("h:mm tt");
             
