@@ -44,7 +44,7 @@ public class TimedTasks
             if (headlines == null || headlines.Count == 0)
             {
                 Log.Info("No new alerts found.");
-                await Task.Delay(30 * 1000);
+                await Task.Delay(60 * 10000);
                 continue;
             }
 
@@ -53,7 +53,7 @@ public class TimedTasks
             string? bulletinRecord = await new AlertBulletin().MakeRecord(alerts);
             
             sender.SendFile(bulletinRecord, "storeData(QGROUP=__BERecord__,Feed=BERecord)");
-            await Task.Delay(30 * 1000);
+            await Task.Delay(60 * 10000);
         }
     }
     
