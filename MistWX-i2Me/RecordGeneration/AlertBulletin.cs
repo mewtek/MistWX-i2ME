@@ -248,9 +248,13 @@ public class AlertBulletin : I2Record
 
             loc.BLoc = detail.areaName;
             loc.BLocTyp = detail.areaTypeCode;
+            loc.Text = detail.areaId;
             stateInfo.BSt = _states[locationInfo.stCd];
             stateInfo.Text = locationInfo.stCd;
             locations.BStCd = stateInfo;
+            locations.BLocCd = loc;
+            locations.BCntryCd = detail.countryCode;
+            locations.BTzAbbrv = detail.effectiveTimeLocalTimeZone;
 
             header.BLocations = locations;
 
