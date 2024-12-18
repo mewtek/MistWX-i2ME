@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Microsoft.Extensions.Caching.Memory;
 using MistWX_i2Me.Schema.System;
 
 namespace MistWX_i2Me.API;
@@ -16,6 +17,7 @@ public class Base
 
     protected string RecordName = String.Empty;
     protected string DataUrl = String.Empty;
+    private readonly IMemoryCache _locationCache = Globals.LocationCache;
 
     /// <summary>
     /// Downloads XML data from the specified URL
@@ -103,6 +105,12 @@ public class Base
 
     public async Task<LFRecordLocation> GetLocInfo(string locId)
     {
+        if (_locationCache.TryGetValue(locId, out LFRecordLocation cachedLocation))
+        {
+            Log.Debug($"Pulled location {locId} from locations cache.");
+            return cachedLocation;
+        }
+        
         SQLiteConnection sqlite =
             new SQLiteConnection($"Data Source={Path.Combine(AppContext.BaseDirectory, "Data", "LFRecord.db")}");
         
@@ -112,6 +120,9 @@ public class Base
             ($"SELECT * FROM LFRecord WHERE locId = '{locId}'");
         
         await sqlite.CloseAsync();
+        
+        _locationCache.Set(locId, location);
+        Log.Debug($"Location {locId} added to the location cache.");
 
         return location;
     }
