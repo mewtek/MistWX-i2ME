@@ -8,6 +8,7 @@ public class CurrentObsRecord : I2Record
     public async Task<string> MakeRecord(List<GenericResponse<CurrentObservationsResponse>> results)
     {
         Log.Info("Creating current observations record..");
+        string recordPath = Path.Combine(AppContext.BaseDirectory, "temp", "CurrentObservations.xml");
         string recordScript = "<Data type=\"CurrentObservations\">";
 
         foreach (var result in results)
@@ -19,6 +20,8 @@ public class CurrentObsRecord : I2Record
         
         recordScript += "</Data>";
 
-        return recordScript;
+        await File.WriteAllTextAsync(recordPath, ValidateXml(recordScript));
+
+        return recordPath;
     }
 }
