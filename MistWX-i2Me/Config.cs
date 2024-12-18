@@ -38,12 +38,14 @@ public class Config
     {
         string path = Path.Combine(AppContext.BaseDirectory, "config.xml");
         XmlSerializer serializer = new XmlSerializer(typeof(Config));
-
+        XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+        namespaces.Add("", "");
+        
         // Create a base config if none exists
         if (!File.Exists(path))
         {
             config = new Config();
-            serializer.Serialize(File.Create(path), config);
+            serializer.Serialize(File.Create(path), config, namespaces);
 
             return config;
         }
