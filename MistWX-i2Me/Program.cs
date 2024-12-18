@@ -25,6 +25,7 @@ public class Program
         Log.Info("Starting i2ME...");
 
         Config config = Config.Load();
+        
         UdpSender routineSender = new UdpSender(config.UnitConfig.I2MsgAddress, config.UnitConfig.RoutineMsgPort,
                 config.UnitConfig.InterfaceAddress);
         UdpSender prioritySender = new UdpSender(config.UnitConfig.I2MsgAddress, config.UnitConfig.PriorityMsgPort,
@@ -36,8 +37,9 @@ public class Program
 
         Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender);
         Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, routineSender);
+        Task biHourlyRecordGen = TimedTasks.BiHourlyCollection(locations, routineSender);
         Task cleanTempDir = TimedTasks.CleanTempDirectory();
-        await Task.WhenAll(checkAlerts, hourlyRecordGen, cleanTempDir);
+        await Task.WhenAll(checkAlerts, hourlyRecordGen, biHourlyRecordGen, cleanTempDir);
 
     }
 
