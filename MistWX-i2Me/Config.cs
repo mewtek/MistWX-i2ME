@@ -18,8 +18,12 @@ public class Config
     public string MachineProductConfig { get; set; } =
         "C:\\Program Files (x86)\\TWC\\i2\\managed\\MachineProductConfig.xml";
 
+    [XmlElement] public bool UseNationalLocations { get; set; } = false;
+    [XmlElement] public int RecordGenTimeSeconds { get; set; } = 3600;      // Defaults to 1 hour
+    [XmlElement] public int CheckAlertTimeSeconds { get; set; } = 600;      // Defaults to 10 minutes
+
     [XmlElement] public NetworkConfig UnitConfig { get; set; } = new NetworkConfig();
-    [XmlElement("RadarConfig")] public RadarConfig radarConfig { get; set; } = new RadarConfig();
+    [XmlElement("RadarConfig")] public RadarConfig RadarConfiguration { get; set; } = new RadarConfig();
 
     // Actual configuration setup \\
     

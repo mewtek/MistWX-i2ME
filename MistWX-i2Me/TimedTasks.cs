@@ -34,7 +34,7 @@ public class TimedTasks
     /// </summary>
     /// <param name="locations">Array of location IDs</param>
     /// <param name="sender">UdpSender, prefer priority port</param>
-    public static async Task CheckForAlerts(string[] locations, UdpSender sender)
+    public static async Task CheckForAlerts(string[] locations, UdpSender sender, int checkInterval)
     {
         while (true)
         {
@@ -44,7 +44,7 @@ public class TimedTasks
             if (headlines == null || headlines.Count == 0)
             {
                 Log.Info("No new alerts found.");
-                await Task.Delay(60 * 10000);
+                await Task.Delay(checkInterval * 1000);
                 continue;
             }
 
@@ -53,11 +53,11 @@ public class TimedTasks
             string? bulletinRecord = await new AlertBulletin().MakeRecord(alerts);
             
             sender.SendFile(bulletinRecord, "storeData(QGROUP=__BERecord__,Feed=BERecord)");
-            await Task.Delay(60 * 10000);
+            await Task.Delay(checkInterval * 1000);
         }
     }
     
-    public static async Task HourlyRecordCollection(string[] locations, UdpSender sender)
+    public static async Task RecordGenTask(string[] locations, UdpSender sender, int generationInterval)
     {
         while (true)
         {
@@ -90,11 +90,11 @@ public class TimedTasks
             sender.SendFile(acpsRecord, "storeData(QGROUP=__AchesAndPains__,Feed=AchesAndPains)");
             sender.SendFile(brsRecord, "storeData(QGROUP=__Breathing__,Feed=Breathing)");
             
-            string nextTimestamp = DateTime.Now.AddHours(1).ToString("h:mm tt");
+            string nextTimestamp = DateTime.Now.AddSeconds(generationInterval).ToString("h:mm tt");
             
             Log.Info($"Next record generation will be at {nextTimestamp}");
             
-            await Task.Delay(3600 * 1000);
+            await Task.Delay(generationInterval * 1000);
         }
     }
 }

@@ -35,10 +35,10 @@ public class Program
         
         string[] locations = await GetMachineLocations(config);
 
-        Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender);
-        Task hourlyRecordGen = TimedTasks.HourlyRecordCollection(locations, routineSender);
+        Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender, config.CheckAlertTimeSeconds);
+        Task recordGenTask = TimedTasks.RecordGenTask(locations, routineSender, config.RecordGenTimeSeconds);
         Task cleanTempDir = TimedTasks.CleanTempDirectory();
-        await Task.WhenAll(checkAlerts, hourlyRecordGen, cleanTempDir);
+        await Task.WhenAll(checkAlerts, recordGenTask, cleanTempDir);
 
     }
 
