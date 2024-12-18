@@ -40,9 +40,9 @@ public class Program
     /// Runs through the pre-existing MachineProductConfig.xml file to scrape what locations that need
     /// weather information collected.
     /// </summary>
-    public static async Task<List<string>> GetMachineLocations(Config config)
+    private static async Task<string[]> GetMachineLocations(Config config)
     {
-        List<string> locations = new List<string>();
+        string[] locations = Array.Empty<string>();
 
         Log.Info("Getting locations for this unit..");
 
@@ -80,7 +80,7 @@ public class Program
                 }
                 
                 string choppedValue = i.Value.ToString().Split("1_US_")[1];
-                locations.Add(choppedValue);
+                locations.Append(choppedValue);
             }
         }
         
