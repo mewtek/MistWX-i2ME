@@ -210,8 +210,11 @@ public class Base
                 {
                     T? deserializedData = await JsonSerializer.DeserializeAsync<T?>(stream);
                     results.Add(new GenericResponse<T>(locationInfo, response, deserializedData));
+                    continue;
                 }
             }
+            
+            Log.Warning($"Failed to generate {RecordName} due to null response.");
         }
 
         return results;
