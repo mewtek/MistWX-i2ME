@@ -86,7 +86,14 @@ public class Base
 
         if (url.Contains("{zone}"))
         {
-            url = url.Replace("{zone}", location.zoneId);
+            if (location.zoneId == "ZZZ999" || string.IsNullOrEmpty(location.zoneId))
+            {
+                url = url.Replace("{zone}", location.cntyId);
+            }
+            else
+            {
+                url = url.Replace("{zone}", location.zoneId);
+            }
         }
 
 
