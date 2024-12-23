@@ -12,4 +12,9 @@ public static class Globals
     /// Memory cache for storing AlertHeadline IDs and their UTC expiration times
     /// </summary>
     public static IMemoryCache AlertsCache = new MemoryCache(new MemoryCacheOptions());
+    /// <summary>
+    /// List of the alert detail keys for the AlertsCache, primarily used for clearing
+    /// old alerts.
+    /// </summary>
+    public static List<string> AlertDetailKeys = new();
 }

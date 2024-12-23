@@ -15,6 +15,7 @@ public class AlertDetailsProduct : Base
     public async Task<List<GenericResponse<AlertDetailResponse>>> Populate(List<GenericResponse<HeadlineResponse>> headlines)
     {
         IMemoryCache alertsCache = Globals.AlertsCache;
+        List<string> alertDetailKeys = Globals.AlertDetailKeys;
         List<GenericResponse<AlertDetailResponse>> results = new();
         
         foreach (var headline in headlines)
@@ -40,6 +41,7 @@ public class AlertDetailsProduct : Base
                     AlertDetailResponse? response = await JsonSerializer.DeserializeAsync<AlertDetailResponse?>(stream);
                     results.Add(new GenericResponse<AlertDetailResponse>(headline.Location, res, response));
                     alertsCache.Set(alert.detailKey, alert.expireTimeUTC);
+                    alertDetailKeys.Add(alert.detailKey);
                     Log.Debug($"Alert ID {alert.detailKey} cached, expires @ {alert.expireTimeUTC} UTC.");
                 }
             }
