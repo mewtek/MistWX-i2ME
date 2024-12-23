@@ -36,9 +36,9 @@ public class TimedTasks
     /// <param name="sender">UdpSender, prefer priority port</param>
     public static async Task CheckForAlerts(string[] locations, UdpSender sender, int checkInterval)
     {
-        if (Config.config.UseNationalLocations)
+        if (Config.config.UseNationalLocations || !Config.config.GetAlerts)
         {
-            Log.Debug("Disabling alert checking since national locations are enabled..");
+            Log.Debug("Disabling alert generation.");
             return;
         }
         
@@ -67,35 +67,73 @@ public class TimedTasks
     {
         while (true)
         {
+            Config.DataEndpointConfig dataConfig = Config.config.DataConfig;
+            
             Log.Info("Running hourly record collection");
-            List<GenericResponse<CurrentObservationsResponse>> obs =
-                await new CurrentObservationsProduct().Populate(locations);
-            List<GenericResponse<DailyForecastResponse>> dfs = await new DailyForecastProduct().Populate(locations);
-            List<GenericResponse<HourlyForecastResponse>> hfs = await new HourlyForecastProduct().Populate(locations);
-            List<GenericResponse<AirQualityResponse>> aqs = await new AirQualityProduct().Populate(locations);
-            List<GenericResponse<PollenResponse>> pfs = await new PollenForecastProduct().Populate(locations);
-            List<GenericResponse<HeatingCoolingResponse>> hcs = await new HeatingCoolingProduct().Populate(locations);
-            List<GenericResponse<AchesPainResponse>> acps = await new AchesPainProduct().Populate(locations);
-            List<GenericResponse<BreathingResponse>> brs = await new BreathingProduct().Populate(locations);
+            
+            // TODO: This could probably be a better system, but this is the simplest implementation for this for the
+            //       time being.
+            
+            
+            // Implements suggestion #3 in the issue tracker.
+            
+            if (dataConfig.CurrentConditions)
+            {
+                List<GenericResponse<CurrentObservationsResponse>> obs =
+                    await new CurrentObservationsProduct().Populate(locations);
+                string obsRecord = await new CurrentObsRecord().MakeRecord(obs);
+                sender.SendFile(obsRecord, "storeData(QGROUP=__CurrentObservations__,Feed=CurrentObservations)");
+            }
 
-            string obsRecord = await new CurrentObsRecord().MakeRecord(obs);
-            string dfsRecord = await new DailyForecastRecord().MakeRecord(dfs);
-            string hfRecord = await new HourlyForecastRecord().MakeRecord(hfs);
-            string aqsRecord = await new AirQualityRecord().MakeRecord(aqs);
-            string pfsRecord = await new PollenRecord().MakeRecord(pfs);
-            string hcRecord = await new HeatingCoolingRecord().MakeRecord(hcs);
-            string acpsRecord = await new AchesPainRecord().MakeRecord(acps);
-            string brsRecord = await new BreathingRecord().MakeRecord(brs);
-            
-            sender.SendFile(obsRecord, "storeData(QGROUP=__CurrentObservations__,Feed=CurrentObservations)");
-            sender.SendFile(dfsRecord, "storeData(QGROUP=__DailyForecast__,Feed=DailyForecast)");
-            sender.SendFile(hfRecord, "storeData(QGROUP=__HourlyForecast__,Feed=HourlyForecast)");
-            sender.SendFile(aqsRecord, "storeData(QGROUP=__AirQuality__,Feed=AirQuality)");
-            sender.SendFile(pfsRecord, "storeData(QGROUP=__PollenForecast__,Feed=PollenForecast)");
-            sender.SendFile(hcRecord, "storeData(QGROUP=__HeatingAndCooling__,Feed=HeatingAndCooling)");
-            sender.SendFile(acpsRecord, "storeData(QGROUP=__AchesAndPains__,Feed=AchesAndPains)");
-            sender.SendFile(brsRecord, "storeData(QGROUP=__Breathing__,Feed=Breathing)");
-            
+            if (dataConfig.DailyForecast)
+            {
+                List<GenericResponse<DailyForecastResponse>> dfs = await new DailyForecastProduct().Populate(locations);
+                string dfsRecord = await new DailyForecastRecord().MakeRecord(dfs);
+                sender.SendFile(dfsRecord, "storeData(QGROUP=__DailyForecast__,Feed=DailyForecast)");
+            }
+
+            if (dataConfig.HourlyForecast)
+            {
+                List<GenericResponse<HourlyForecastResponse>> hfs = await new HourlyForecastProduct().Populate(locations);
+                string hfsRecord = await new HourlyForecastRecord().MakeRecord(hfs);
+                sender.SendFile(hfsRecord, "storeData(QGROUP=__HourlyForecast__,Feed=HourlyForecast)");
+            }
+
+            if (dataConfig.AirQuality)
+            {
+                List<GenericResponse<AirQualityResponse>> aiqs = await new AirQualityProduct().Populate(locations);
+                string aiqsRecord = await new AirQualityRecord().MakeRecord(aiqs);
+                sender.SendFile(aiqsRecord, "storeData(QGROUP=__AirQuality__,Feed=AirQuality)");
+            }
+
+            if (dataConfig.PollenForecast)
+            {
+                List<GenericResponse<PollenResponse>> pfs = await new PollenForecastProduct().Populate(locations);
+                string pfsRecord = await new PollenRecord().MakeRecord(pfs);
+                sender.SendFile(pfsRecord, "storeData(QGROUP=__PollenForecast__,Feed=PollenForecast)");
+            }
+
+            if (dataConfig.HeatingAndCooling)
+            {
+                List<GenericResponse<HeatingCoolingResponse>> hcs = await new HeatingCoolingProduct().Populate(locations);
+                string hcsRecord = await new HeatingCoolingRecord().MakeRecord(hcs);
+                sender.SendFile(hcsRecord, "storeData(QGROUP=__HeatingAndCooling__,Feed=HeatingAndCooling)");
+            }
+
+            if (dataConfig.AchesAndPains)
+            {
+                List<GenericResponse<AchesPainResponse>> acps = await new AchesPainProduct().Populate(locations);
+                string acpsRecord = await new AchesPainRecord().MakeRecord(acps);
+                sender.SendFile(acpsRecord, "storeData(QGROUP=__AchesAndPain__,Feed=AchesAndPain)");
+            }
+
+            if (dataConfig.Breathing)
+            {
+                List<GenericResponse<BreathingResponse>> brs = await new BreathingProduct().Populate(locations);
+                string brsRecord = await new BreathingRecord().MakeRecord(brs);
+                sender.SendFile(brsRecord, "storeData(QGROUP=__Breathing__,Feed=Breathing)");
+            }
+
             string nextTimestamp = DateTime.Now.AddSeconds(generationInterval).ToString("h:mm tt");
             
             Log.Info($"Next record generation will be at {nextTimestamp}");
