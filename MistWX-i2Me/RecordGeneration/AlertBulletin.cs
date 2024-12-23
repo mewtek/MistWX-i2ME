@@ -183,7 +183,8 @@ public class AlertBulletin : I2Record
 
         if (alertDetails.Count < 1)
         {
-            return null;
+            await File.WriteAllTextAsync(recordPath, "<Data type=\"BERecord\"><BERecord></BERecord></Data>");
+            return recordPath;
         }
 
         foreach (var details in alertDetails)
