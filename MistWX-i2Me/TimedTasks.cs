@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 using MistWX_i2Me.API;
 using MistWX_i2Me.API.Products;
 using MistWX_i2Me.Communication;
@@ -61,6 +62,41 @@ public class TimedTasks
             sender.SendFile(bulletinRecord, "storeData(QGROUP=__BERecord__,Feed=BERecord)");
             await Task.Delay(checkInterval * 1000);
         }
+    }
+
+    /// <summary>
+    /// Removes expired alerts from the alerts cache
+    /// </summary>
+    public static async Task ClearExpiredAlerts()
+    {
+        if (Config.config.UseNationalLocations || !Config.config.GetAlerts)
+        {
+            return;
+        }
+        
+        while (true)
+        {
+            var currentTimeLong = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+
+            foreach (var key in Globals.AlertDetailKeys)
+            {
+                if (!Globals.AlertsCache.TryGetValue(key, out int expireTime))
+                {
+                    continue;
+                }
+
+                if (currentTimeLong < expireTime)
+                {
+                    continue;
+                }
+            
+                Globals.AlertsCache.Remove(key);
+                Globals.AlertDetailKeys.Remove(key);
+                Log.Debug($"Removed expired alert {key} from the alerts cache.");
+                await Task.Delay(90 * 1000);
+            }
+        }
+
     }
     
     public static async Task RecordGenTask(string[] locations, UdpSender sender, int generationInterval)

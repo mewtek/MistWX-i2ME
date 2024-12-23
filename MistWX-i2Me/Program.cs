@@ -57,8 +57,9 @@ public class Program
 
         Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender, config.CheckAlertTimeSeconds);
         Task recordGenTask = TimedTasks.RecordGenTask(locations, routineSender, config.RecordGenTimeSeconds);
+        Task clearAlertsCache = TimedTasks.ClearExpiredAlerts();
         Task cleanTempDir = TimedTasks.CleanTempDirectory();
-        await Task.WhenAll(checkAlerts, recordGenTask, cleanTempDir);
+        await Task.WhenAll(checkAlerts, recordGenTask, cleanTempDir, clearAlertsCache);
 
     }
 
