@@ -12,6 +12,7 @@ public class Config
     
     [XmlElement] public string TwcApiKey { get; set; } = "REPLACE_ME";
     [XmlElement] public string LogLevel { get; set; } = "info";
+    [XmlElement] public bool GetAlerts { get; set; } = true;
 
     // Used to process what locations to generate
     [XmlElement]
@@ -21,9 +22,10 @@ public class Config
     [XmlElement] public bool UseNationalLocations { get; set; } = false;
     [XmlElement] public int RecordGenTimeSeconds { get; set; } = 3600;      // Defaults to 1 hour
     [XmlElement] public int CheckAlertTimeSeconds { get; set; } = 600;      // Defaults to 10 minutes
-
+    
     [XmlElement] public NetworkConfig UnitConfig { get; set; } = new NetworkConfig();
     [XmlElement("RadarConfig")] public RadarConfig RadarConfiguration { get; set; } = new RadarConfig();
+    [XmlElement("DataConfig")] public DataEndpointConfig DataConfig { get; set; } = new DataEndpointConfig();
 
     // Actual configuration setup \\
     
@@ -79,5 +81,18 @@ public class Config
     {
         [XmlElement] public bool UseRadarServer { get; set; } = false;
         [XmlElement] public string RadarServerUrl { get; set; } = "REPLACE_ME";
+    }
+
+    [XmlRoot("DataConfig")]
+    public class DataEndpointConfig
+    {
+        [XmlElement] public bool CurrentConditions { get; set; } = true;
+        [XmlElement] public bool DailyForecast { get; set; } = true;
+        [XmlElement] public bool HourlyForecast { get; set; } = true;
+        [XmlElement] public bool AirQuality { get; set; } = true;
+        [XmlElement] public bool AchesAndPains { get; set; } = true;
+        [XmlElement] public bool Breathing { get; set; } = true;
+        [XmlElement] public bool HeatingAndCooling { get; set; } = true;
+        [XmlElement] public bool PollenForecast { get; set; } = true;
     }
 }
