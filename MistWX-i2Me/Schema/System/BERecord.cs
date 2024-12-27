@@ -115,7 +115,7 @@ public class BEHdr
     public string BPIL = "NOT_USED";
 
     [XmlElement(ElementName = "bWMOHdr")]
-    public string BWMOHdr { get; set; }
+    public string BWMOHdr { get; set; } = "NOT_USED";
 
     [XmlElement(ElementName = "bEvent")]
     public BEvent BEvent { get; set; }
@@ -192,7 +192,7 @@ public class BERecord
     public string ClientKey { get; set; }
 
     [XmlAttribute(AttributeName = "id")]
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     [XmlAttribute(AttributeName = "locationKey")]
     public string LocationKey { get; set; }

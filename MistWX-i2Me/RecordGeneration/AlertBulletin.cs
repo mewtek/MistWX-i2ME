@@ -210,7 +210,7 @@ public class AlertBulletin : I2Record
             var processTime = DateTimeOffset.FromUnixTimeSeconds(detail.processTimeUTC).ToString("yyyy MM dd HH mm")
                 .Replace(" ", "");
 
-            record.Id = 0000000;
+            record.Id = "0000000";
             record.LocationKey =
                 $"{detail.areaId}_{detail.phenomena}_{detail.significance}_{detail.eventTrackingNumber}_{detail.officeCode}";
             record.ClientKey = record.LocationKey;
@@ -224,6 +224,10 @@ public class AlertBulletin : I2Record
             
             EActionCd eActionCd = new EActionCd();
             eActionCd.EActionPriority = detail.messageTypeCode;
+            
+            EOfficeId eOfficeId = new EOfficeId();
+            eOfficeId.EOfficeNm = detail.officeName;
+            eOfficeId.Text = detail.officeCode;
 
             switch (detail.messageType)
             {
@@ -236,6 +240,7 @@ public class AlertBulletin : I2Record
             }
             
             bEvent.EActionCd = eActionCd;
+            bEvent.EOfficeId = eOfficeId;
 
             bEvent.EPhenom = detail.phenomena;
             bEvent.ESgnfcnc = detail.significance;
