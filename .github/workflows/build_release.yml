@@ -33,7 +33,7 @@ jobs:
             - uses: "actions/upload-artifact@v3"
               with:
                 name: linux
-                path: ./MistWx-i2Me/bin/Release/net6.0
+                path: linux/**
             # TODO: Add Testing
 
     build-windows:
@@ -62,4 +62,4 @@ jobs:
             - uses: "actions/upload-artifact@v3"
               with:
                 name: windows
-                path: ./MistWx-i2Me/bin/Release/net6.0
+                path: windows/**
