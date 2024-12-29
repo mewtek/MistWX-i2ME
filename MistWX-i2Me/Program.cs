@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System.Data.SQLite;
+using System.Xml.Serialization;
 using MistWX_i2Me;
 using MistWX_i2Me.API;
 using MistWX_i2Me.API.Products;
@@ -125,10 +126,18 @@ public class Program
                 {
                     continue;
                 }
-                
-                string choppedValue = i.Value.ToString().Split("1_US_")[1];
-                locations.Add(choppedValue);
-                
+
+
+                try
+                {
+                    string choppedValue = i.Value.ToString().Split("1_US_")[1];
+
+                    locations.Add(choppedValue);
+                }
+                catch (Exception ex)
+                {
+                    continue;
+                }
             }
         }
         
