@@ -1,0 +1,51 @@
+name: MistWX i2ME
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build-linux:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                fetch-depth: 0
+
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: 6.0.x
+
+            - name: Restore Dependencies
+              run: dotnet restore
+              working-directory: ./MistWX-i2Me
+
+            - name: Build Linux Executable
+              run: dotnet build -c Release --no-restore
+              working-directory: ./MistWX-i2Me
+            
+            # TODO: Add Testing
+
+    build-windows:
+        runs-on: windows-latest
+
+        steps:
+            - uses: "actions/checkout@v2"
+              with:
+                fetch-depth: 0
+
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v1
+              with:
+                dotnet-version: 6.0.x
+            
+            - name: Restore Dependencies
+              run: dotnet restore
+              working-directory: ./MistWX-i2Me
+
+            - name: Build Windows Executable
+              run: dotnet build -c Release --no-restore
+              working-directory: ./MistWX-i2Me
