@@ -95,11 +95,30 @@ public class Program
             mpc = (MachineProductConfig) new XmlSerializer(typeof(MachineProductConfig)).Deserialize(reader);
         }
 
+        var configLocationKeys = new List<string>
+        {
+            "PrimaryLocation",
+            "NearbyLocation1",
+            "NearbyLocation2",
+            "NearbyLocation3",
+            "NearbyLocation4",
+            "NearbyLocation5",
+            "NearbyLocation6",
+            "NearbyLocation7",
+            "NearbyLocation8",
+            "MetroMapCity1",
+            "MetroMapCity2",
+            "MetroMapCity3",
+            "MetroMapCity4",
+            "MetroMapCity5",
+            "MetroMapCity6",
+            "MetroMapCity7",
+            "MetroMapCity8",
+        };
+
         foreach (ConfigItem i in mpc.ConfigDef.ConfigItems.ConfigItem)
         {
-            if (i.Key == "PrimaryLocation" || i.Key == "NearbyLocation1" || i.Key == "NearbyLocation2" ||
-                i.Key == "NearbyLocation3" || i.Key == "NearbyLocation4" || i.Key == "NearbyLocation5" ||
-                i.Key == "NearbyLocation6" || i.Key == "NearbyLocation7" || i.Key == "NearbyLocation8")
+            if (configLocationKeys.Contains(i.Key))
             {
                 Log.Debug(i.Value);
                 if (string.IsNullOrEmpty(i.Value.ToString()))
