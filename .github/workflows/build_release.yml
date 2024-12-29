@@ -33,7 +33,8 @@ jobs:
             - uses: "actions/upload-artifact@v3"
               with:
                 name: linux
-                path: linux/**
+                path: ${{github.workspace}}/MistWX-i2Me/bin/Release/net6.0/**
+                if-no-files-found: error
             # TODO: Add Testing
 
     build-windows:
@@ -62,4 +63,5 @@ jobs:
             - uses: "actions/upload-artifact@v3"
               with:
                 name: windows
-                path: windows/**
+                path: ${{github.workspace}}/MistWX-i2Me/bin/Release/net6.0/**
+                if-no-files-found: error
