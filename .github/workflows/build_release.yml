@@ -1,4 +1,4 @@
-name: MistWX i2ME
+name: Bleeding edge release builds
 
 on:
     push:
