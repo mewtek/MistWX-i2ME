@@ -43,6 +43,12 @@ public class Config
         XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
         namespaces.Add("", "");
         
+        // Create the temp directory if none exists
+        if (!Directory.Exists(Path.Combine(AppContext.BaseDirectory, "temp")))
+        {
+            Directory.CreateDirectory(Path.Combine(AppContext.BaseDirectory, "temp"));
+        }
+        
         // Create a base config if none exists
         if (!File.Exists(path))
         {
