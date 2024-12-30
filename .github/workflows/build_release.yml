@@ -30,9 +30,9 @@ jobs:
               working-directory: ./MistWX-i2Me
             
 
-            - uses: "actions/upload-artifact@v3"
+            - uses: "actions/upload-artifact@v4"
               with:
-                name: linux
+                name: MistWX-i2ME-artifact-linux-x64
                 path: ${{github.workspace}}/MistWX-i2Me/bin/Release/net6.0/**
                 if-no-files-found: error
             # TODO: Add Testing
@@ -60,8 +60,8 @@ jobs:
               working-directory: ./MistWX-i2Me
 
             
-            - uses: "actions/upload-artifact@v3"
+            - uses: "actions/upload-artifact@v4"
               with:
-                name: windows
+                name: MistWX-i2ME-artifact-windows-x64
                 path: ${{github.workspace}}/MistWX-i2Me/bin/Release/net6.0/**
                 if-no-files-found: error
