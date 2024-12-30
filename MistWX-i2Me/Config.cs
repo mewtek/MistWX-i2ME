@@ -17,7 +17,7 @@ public class Config
     // Used to process what locations to generate
     [XmlElement]
     public string MachineProductConfig { get; set; } =
-        "C:\\Program Files (x86)\\TWC\\i2\\managed\\MachineProductConfig.xml";
+        "C:\\Program Files (x86)\\TWC\\i2\\Managed\\Config\\MachineProductCfg.xml";
 
     [XmlElement] public bool UseNationalLocations { get; set; } = false;
     [XmlElement] public int RecordGenTimeSeconds { get; set; } = 3600;      // Defaults to 1 hour
