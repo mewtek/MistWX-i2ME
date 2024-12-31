@@ -118,6 +118,7 @@ public class AlertBulletin : I2Record
         { "LA", "Louisiana" },
         { "ME", "Maine" },
         { "MD", "Maryland" },
+        { "DC", "District of Columbia" },
         { "MA", "Massachusetts" },
         { "MI", "Michigan" },
         { "MN", "Minnesota" },
