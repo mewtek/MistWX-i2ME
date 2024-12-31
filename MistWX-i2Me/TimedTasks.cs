@@ -9,27 +9,7 @@ namespace MistWX_i2Me;
 
 public class TimedTasks
 {
-    /// <summary>
-    /// Cleans out the temp directory every 2 hours.
-    /// </summary>
-    public static async Task CleanTempDirectory()
-    {
-        Log.Info("Cleaning temp directory..");
-
-        DirectoryInfo di = new DirectoryInfo(Path.Combine(AppContext.BaseDirectory, "temp"));
-        foreach (FileInfo file in di.GetFiles())
-        {
-            file.Delete();
-        }
-
-        foreach (DirectoryInfo dir in di.GetDirectories())
-        {
-            dir.Delete();
-        }
-        
-        await Task.Delay(7200 * 1000);
-    }
-
+    
     /// <summary>
     /// Checks every 10 minutes for new alerts in the unit's area.
     /// </summary>
