@@ -56,7 +56,7 @@ public class TimedTasks
         
         while (true)
         {
-            var currentTimeLong = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var currentTimeLong = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
             foreach (var key in Globals.AlertDetailKeys)
             {
