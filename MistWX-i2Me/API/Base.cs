@@ -36,6 +36,12 @@ public class Base
             return String.Empty;
         }
 
+        if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+        {
+            Log.Debug($"Request for {RecordName} failed with error 400.");
+            return String.Empty;
+        }
+
         byte[] content = await Client.GetByteArrayAsync(url);
         string contentString = Encoding.UTF8.GetString(content);
 
