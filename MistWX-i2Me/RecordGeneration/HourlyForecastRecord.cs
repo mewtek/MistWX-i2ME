@@ -14,8 +14,8 @@ public class HourlyForecastRecord : I2Record
         foreach (var result in results)
         {
             recordScript +=
-                $"<HourlyForecast id=\"000000000\" locationKey=\"{result.Location.primTecci}\" isWxScan=\"0\">" +
-                $"{result.RawResponse}<clientKey>{result.Location.primTecci}</clientKey></HourlyForecast>";
+                $"<HourlyForecast id=\"000000000\" locationKey=\"{result.Location.coopId}\" isWxScan=\"0\">" +
+                $"{result.RawResponse}<clientKey>{result.Location.coopId}</clientKey></HourlyForecast>";
         }
 
         recordScript += "</Data>";
