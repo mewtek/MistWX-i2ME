@@ -121,7 +121,7 @@ public class Base
 
     public async Task<string?> DownloadLocationData(LFRecordLocation location)
     {
-        Log.Info($"Downloading {RecordName} for location {location.locId}");
+        Log.Debug($"Downloading {RecordName} for location {location.locId}");
         
         string url = FormatUrl(location);
         string response = await DownloadRecord(url);
