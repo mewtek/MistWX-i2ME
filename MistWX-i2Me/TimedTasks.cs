@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.Extensions.Caching.Memory;
 using MistWX_i2Me.API;
 using MistWX_i2Me.API.Products;
@@ -81,8 +82,11 @@ public class TimedTasks
     
     public static async Task RecordGenTask(string[] locations, UdpSender sender, int generationInterval)
     {
+        var watch = Stopwatch.StartNew();
+        
         while (true)
         {
+            watch.Restart();
             Config.DataEndpointConfig dataConfig = Config.config.DataConfig;
             
             Log.Info("Running hourly record collection");
@@ -156,6 +160,9 @@ public class TimedTasks
 
             string nextTimestamp = DateTime.Now.AddSeconds(generationInterval).ToString("h:mm tt");
             
+            watch.Stop();
+            
+            Log.Info($"Generated data for {locations.Length} locations in {watch.ElapsedMilliseconds} ms.");
             Log.Info($"Next record generation will be at {nextTimestamp}");
             
             await Task.Delay(generationInterval * 1000);
