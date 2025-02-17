@@ -87,14 +87,11 @@ public class TimedTasks
             
             Log.Info("Running hourly record collection");
             
-            // TODO: This could probably be a better system, but this is the simplest implementation for this for the
-            //       time being.
-            
-            
             // Implements suggestion #3 in the issue tracker.
             
             if (dataConfig.CurrentConditions)
             {
+                Log.Info($"Building CurrentConditions I2 record for {locations.Length} locations..");
                 List<GenericResponse<CurrentObservationsResponse>> obs =
                     await new CurrentObservationsProduct().Populate(locations);
                 string obsRecord = await new CurrentObsRecord().MakeRecord(obs);
@@ -103,6 +100,7 @@ public class TimedTasks
 
             if (dataConfig.DailyForecast)
             {
+                Log.Info($"Building DailyForecast I2 record for {locations.Length} locations..");
                 List<GenericResponse<DailyForecastResponse>> dfs = await new DailyForecastProduct().Populate(locations);
                 string dfsRecord = await new DailyForecastRecord().MakeRecord(dfs);
                 sender.SendFile(dfsRecord, "storeData(QGROUP=__DailyForecast__,Feed=DailyForecast)");
@@ -110,6 +108,7 @@ public class TimedTasks
 
             if (dataConfig.HourlyForecast)
             {
+                Log.Info($"Building HourlyForecast I2 record for {locations.Length} locations..");
                 List<GenericResponse<HourlyForecastResponse>> hfs = await new HourlyForecastProduct().Populate(locations);
                 string hfsRecord = await new HourlyForecastRecord().MakeRecord(hfs);
                 sender.SendFile(hfsRecord, "storeData(QGROUP=__HourlyForecast__,Feed=HourlyForecast)");
@@ -117,6 +116,7 @@ public class TimedTasks
 
             if (dataConfig.AirQuality)
             {
+                Log.Info($"Building AirQuality I2 record for {locations.Length} locations..");
                 List<GenericResponse<AirQualityResponse>> aiqs = await new AirQualityProduct().Populate(locations);
                 string aiqsRecord = await new AirQualityRecord().MakeRecord(aiqs);
                 sender.SendFile(aiqsRecord, "storeData(QGROUP=__AirQuality__,Feed=AirQuality)");
@@ -124,6 +124,7 @@ public class TimedTasks
 
             if (dataConfig.PollenForecast)
             {
+                Log.Info($"Building PollenForecast I2 record for {locations.Length} locations..");
                 List<GenericResponse<PollenResponse>> pfs = await new PollenForecastProduct().Populate(locations);
                 string pfsRecord = await new PollenRecord().MakeRecord(pfs);
                 sender.SendFile(pfsRecord, "storeData(QGROUP=__PollenForecast__,Feed=PollenForecast)");
@@ -131,6 +132,7 @@ public class TimedTasks
 
             if (dataConfig.HeatingAndCooling)
             {
+                Log.Info($"Building HeatingAndCooling I2 record for {locations.Length} locations..");
                 List<GenericResponse<HeatingCoolingResponse>> hcs = await new HeatingCoolingProduct().Populate(locations);
                 string hcsRecord = await new HeatingCoolingRecord().MakeRecord(hcs);
                 sender.SendFile(hcsRecord, "storeData(QGROUP=__HeatingAndCooling__,Feed=HeatingAndCooling)");
@@ -138,6 +140,7 @@ public class TimedTasks
 
             if (dataConfig.AchesAndPains)
             {
+                Log.Info($"Building AchesAndPains I2 record for {locations.Length} locations..");
                 List<GenericResponse<AchesPainResponse>> acps = await new AchesPainProduct().Populate(locations);
                 string acpsRecord = await new AchesPainRecord().MakeRecord(acps);
                 sender.SendFile(acpsRecord, "storeData(QGROUP=__AchesAndPain__,Feed=AchesAndPain)");
@@ -145,6 +148,7 @@ public class TimedTasks
 
             if (dataConfig.Breathing)
             {
+                Log.Info($"Building Breathing I2 record for {locations.Length} locations..");
                 List<GenericResponse<BreathingResponse>> brs = await new BreathingProduct().Populate(locations);
                 string brsRecord = await new BreathingRecord().MakeRecord(brs);
                 sender.SendFile(brsRecord, "storeData(QGROUP=__Breathing__,Feed=Breathing)");
