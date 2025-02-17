@@ -26,6 +26,16 @@ public class Program
         Log.Info("Starting i2ME...");
 
         Config config = Config.Load();
+
+        if (config.TwcApiKey == "REPLACE_ME" || String.IsNullOrEmpty(config.TwcApiKey))
+        {
+            Log.Error("No weather.com API key is currently set.");
+            Log.Info("A valid weather.com API key needs to be set in Config.xml.");
+            Log.Info("If this is your first time running i2ME, the file has been generated in the program's root folder.");
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
+            return;
+        }
         
         UdpSender routineSender = new UdpSender(config.UnitConfig.I2MsgAddress, config.UnitConfig.RoutineMsgPort,
                 config.UnitConfig.InterfaceAddress);
