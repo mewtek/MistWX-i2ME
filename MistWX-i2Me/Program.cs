@@ -69,7 +69,7 @@ public class Program
         Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender, config.CheckAlertTimeSeconds);
         Task recordGenTask = TimedTasks.RecordGenTask(locations, routineSender, config.RecordGenTimeSeconds);
         Task clearAlertsCache = TimedTasks.ClearExpiredAlerts();
-        await Task.WhenAll(checkAlerts, recordGenTask, clearAlertsCache);
+        await Task.WhenAll(recordGenTask, clearAlertsCache, checkAlerts);
 
     }
 
