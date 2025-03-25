@@ -114,6 +114,11 @@ public class Base
             }
         }
 
+        if (url.Contains("{geocodes}"))
+        {
+            url = url.Replace("{geocodes}", string.Join(";", Globals.Geocoordinates));
+        }
+
 
         return url;
     }
