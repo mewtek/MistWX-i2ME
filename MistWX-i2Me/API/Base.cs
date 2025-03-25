@@ -17,7 +17,7 @@ public class Base
 
     protected string RecordName = String.Empty;
     protected string DataUrl = String.Empty;
-    private readonly IMemoryCache _locationCache = Globals.LocationCache;
+    private readonly IMemoryCache locationCache = Globals.LocationCache;
 
     /// <summary>
     /// Downloads XML data from the specified URL
@@ -130,7 +130,7 @@ public class Base
 
     public async Task<LFRecordLocation> GetLocInfo(string locId)
     {
-        if (_locationCache.TryGetValue(locId, out LFRecordLocation cachedLocation))
+        if (locationCache.TryGetValue(locId, out LFRecordLocation cachedLocation))
         {
             Log.Debug($"Pulled location {locId} from locations cache.");
             return cachedLocation;
@@ -146,7 +146,12 @@ public class Base
         
         await sqlite.CloseAsync();
         
-        _locationCache.Set(locId, location);
+        locationCache.Set(locId, location);
+        
+        // Add location geocoordinates to the global list
+        string locationGeocoordinates = $"{location.lat},{location.@long}";
+        Globals.Geocoordinates.Add(locationGeocoordinates);
+        
         Log.Debug($"Location {locId} added to the location cache.");
 
         return location;
