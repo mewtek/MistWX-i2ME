@@ -142,7 +142,7 @@ public class Base
         }
         
         SQLiteConnection sqlite =
-            new SQLiteConnection($"Data Source={Path.Combine(AppContext.BaseDirectory, "Data", "LFRecord.db")}");
+            new SQLiteConnection($"Data Source={Path.Combine(AppContext.BaseDirectory, "LFRecord.db")}", true);
         
         await sqlite.OpenAsync();
 
