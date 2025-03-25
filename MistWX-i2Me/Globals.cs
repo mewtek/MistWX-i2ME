@@ -17,4 +17,10 @@ public static class Globals
     /// old alerts.
     /// </summary>
     public static List<string> AlertDetailKeys = new();
+
+    /// <summary>
+    /// List of geocoordinate strings for parsed locations. Format is latitude,longitude.
+    /// New entries are added whenever a new location is stored in memory.
+    /// </summary>
+    public static List<string> Geocoordinates = new();
 }
