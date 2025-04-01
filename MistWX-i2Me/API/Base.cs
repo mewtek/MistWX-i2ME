@@ -1,3 +1,4 @@
+using System.Data.Common;
 using System.Data.SQLite;
 using Dapper;
 using System.Text;
@@ -95,6 +96,11 @@ public class Base
         if (url.Contains("{long}"))
         {
             url = url.Replace("{long}", location.@long);
+        }
+
+        if (url.Contains("{geocode}"))
+        {
+            url = url.Replace("{geocode}", $"{location.lat},{location.@long}");
         }
 
         if (url.Contains("{zip}"))
