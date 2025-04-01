@@ -65,11 +65,12 @@ public class Program
         {
             locations = await GetMachineLocations(config);
         }
-
+        
+        Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender, config.CheckAlertTimeSeconds);
         Task recordGenTask = TimedTasks.RecordGenTask(locations, routineSender, config.RecordGenTimeSeconds);
         Task clearAlertsCache = TimedTasks.ClearExpiredAlerts();
-        Task checkAlerts = TimedTasks.CheckForAlerts(locations, prioritySender, config.CheckAlertTimeSeconds);
-        await Task.WhenAll(recordGenTask, clearAlertsCache, checkAlerts);
+        
+        await Task.WhenAll(checkAlerts, recordGenTask, clearAlertsCache);
 
     }
 
