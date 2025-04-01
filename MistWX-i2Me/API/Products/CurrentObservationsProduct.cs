@@ -8,7 +8,7 @@ public class CurrentObservationsProduct : Base
     {
         this.RecordName = "CurrentObservations";
         this.DataUrl =
-            "https://api.weather.com/v1/location/{zip}:4:US/observations/current.xml?language=en-US&units=e&apiKey={apiKey}";
+            "https://api.weather.com/v1/geocode/{lat}/{long}/observations/current.xml?language=en-US&units=e&apiKey={apiKey}";
     }
 
     public async Task<List<GenericResponse<CurrentObservationsResponse>>> Populate(string[] locations)
