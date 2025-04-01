@@ -140,7 +140,7 @@ public class Program
 
                 try
                 {
-                    string choppedValue = i.Value.ToString().Split("1_US_")[1];
+                    string choppedValue = i.Value.ToString().Split("_")[2];
 
                     locations.Add(choppedValue);
                 }
