@@ -113,13 +113,7 @@ public class Base
                 url = url.Replace("{zone}", location.zoneId);
             }
         }
-
-        if (url.Contains("{geocodes}"))
-        {
-            url = url.Replace("{geocodes}", string.Join(";", Globals.Geocoordinates));
-        }
-
-
+        
         return url;
     }
 
@@ -152,11 +146,7 @@ public class Base
         await sqlite.CloseAsync();
         
         locationCache.Set(locId, location);
-        
-        // Add location geocoordinates to the global list
-        string locationGeocoordinates = $"{location.lat},{location.@long}";
-        Globals.Geocoordinates.Add(locationGeocoordinates);
-        
+
         Log.Debug($"Location {locId} added to the location cache.");
 
         return location;
