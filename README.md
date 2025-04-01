@@ -20,7 +20,7 @@ Precipitation & Satellite radar images, while not finished, will be added in the
 - [x] Current Observations
 - [x] Daily Forecast
 - [x] Hourly Forecast
-- [x] Air Quality
+- [ ] Air Quality **(Currently being reworked)**
 - [ ] Tide Forecast 
 - [ ] Airport Delays (Requires complete ground-up rewrite)
 - [x] Pollen Forecast
