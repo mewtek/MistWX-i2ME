@@ -178,7 +178,7 @@ public class Base
             LFRecordLocation locationInfo = await GetLocInfo(location);
             string? response = await DownloadLocationData(locationInfo);
 
-            if (response == null)
+            if (string.IsNullOrEmpty(response))
             {
                 return results;
             }
