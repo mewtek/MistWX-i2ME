@@ -240,7 +240,7 @@ public class Base
                     }
                     catch (JsonException exception)
                     {
-                        Log.Error($"Failed to parse JSON data for {RecordName}");
+                        Log.Error($"Failed to parse {RecordName} data for location {location}.");
                         Log.Debug(exception.Message);
                         
                         // Print stacktrace to the debug console if applicable
@@ -252,8 +252,7 @@ public class Base
 
                 }
             }
-            
-            Log.Warning($"Failed to generate {RecordName} due to null response.");
+            Log.Warning($"{RecordName} returned no data for location {location}.");
         }
 
         return results;
