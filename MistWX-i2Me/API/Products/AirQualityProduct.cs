@@ -12,6 +12,6 @@ public class AirQualityProduct : Base
 
     public async Task<List<GenericResponse<AirQualityResponse>>> Populate(string[] locations)
     {
-        return await GetJsonData<AirQualityResponse>(locations);
+        return await GetData<AirQualityResponse>(locations);
     }
 }
