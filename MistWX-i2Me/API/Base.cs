@@ -232,9 +232,24 @@ public class Base
             {
                 using (var stream = StreamFromString(response))
                 {
-                    T? deserializedData = await JsonSerializer.DeserializeAsync<T?>(stream);
-                    results.Add(new GenericResponse<T>(locationInfo, response, deserializedData));
-                    continue;
+                    try
+                    {
+                        T? deserializedData = await JsonSerializer.DeserializeAsync<T?>(stream);
+                        results.Add(new GenericResponse<T>(locationInfo, response, deserializedData));
+                        continue;
+                    }
+                    catch (JsonException exception)
+                    {
+                        Log.Error($"Failed to parse JSON data for {RecordName}");
+                        Log.Debug(exception.Message);
+                        
+                        // Print stacktrace to the debug console if applicable
+                        if (!string.IsNullOrEmpty(exception.StackTrace))
+                        {
+                            Log.Debug(exception.StackTrace);
+                        }
+                    }
+
                 }
             }
             
