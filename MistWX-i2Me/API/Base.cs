@@ -137,8 +137,11 @@ public class Base
     {
         if (locationCache.TryGetValue(locId, out LFRecordLocation cachedLocation))
         {
-            Log.Debug($"Pulled location {locId} from locations cache.");
-            return cachedLocation;
+            if (cachedLocation != null)
+            {
+                Log.Debug($"Pulled location {locId} from locations cache.");
+                return cachedLocation;
+            }
         }
         
         SQLiteConnection sqlite =
