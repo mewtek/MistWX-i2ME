@@ -137,10 +137,15 @@ public class Program
                     continue;
                 }
 
-
                 try
                 {
                     string choppedValue = i.Value.ToString().Split("_")[2];
+
+                    // Avoid duplicate locations from being added to the location list
+                    if (locations.Contains(choppedValue))
+                    {
+                        continue;
+                    }
 
                     locations.Add(choppedValue);
                 }
