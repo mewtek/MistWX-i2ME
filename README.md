@@ -29,3 +29,8 @@ Precipitation & Satellite radar images, while not finished, will be added in the
 - [x] Breathing
 
 **This list is subject to change.**
+
+## Attributions
+Powered by Copernicus Atmosphere Monitoring Service Information 2025
+
+Neither the European Commission nor ECMWF is responsible for any use that may be made of the Copernicus Information or Data it contains.
