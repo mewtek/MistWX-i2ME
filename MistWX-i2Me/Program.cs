@@ -19,7 +19,7 @@ public class Program
                           "\n888 888888888  888       " +
                           "888 8888888888 ");
         
-        Console.WriteLine("(C) Mist Weather Media");
+        Console.WriteLine("(C) mewtek / MistWX 2025");
         Console.WriteLine("This project is licensed under the AGPL v3.0 license.");
         Console.WriteLine("Weather information collected from The National Weather Service & The Weather Company");
         Console.WriteLine("--------------------------------------------------------------------------------------");
