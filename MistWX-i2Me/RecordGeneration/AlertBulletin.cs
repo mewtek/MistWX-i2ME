@@ -208,7 +208,7 @@ public class AlertBulletin : I2Record
             var expireTime = DateTimeOffset.FromUnixTimeSeconds(detail.expireTimeUTC)
                 .ToString("yyyy MM dd HH mm").Replace(" ", "");
             var issueTime = DateTime.Parse(detail.issueTimeLocal).ToString("yyyy MM dd HH mm").Replace(" ", "");
-            var processTime = DateTimeOffset.FromUnixTimeSeconds(detail.processTimeUTC).ToString("yyyy MM dd HH mm")
+            var processTime = DateTimeOffset.FromUnixTimeSeconds(detail.processTimeUTC).ToString("yyyy MM dd HH mm ss")
                 .Replace(" ", "");
 
             record.Id = "0000000";
